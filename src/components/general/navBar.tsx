@@ -52,13 +52,13 @@ const Navbar = () => {
             })
             setIsLogoutModalOpen(false)
         } else {
-            console.log("before signing in")
+            console.log("1st")
             //login
             authInstance.signIn().then((res: any) => {
                 const result = res.wt
                 console.log(result.cu, result.hK, result, 'resss');
 
-                console.log("Hello..u are signed in")
+                console.log("sign in")
 
                 axios.post(`${serverApi}/login`, { name: result.Ad, email: result.cu, picture: result.hK }).then((res) => {
                     if (res.status === 200) {
@@ -71,10 +71,8 @@ const Navbar = () => {
     };
 
     const handleAuthentication = () => {
-
         if (email) {
             console.log('lllll');
-
             setIsLogoutModalOpen(true)
         } else {
             console.log('login');

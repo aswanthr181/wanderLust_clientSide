@@ -9,6 +9,8 @@ import Empty from "./empty"
 import { getGeminiData } from "../../constants/getGeminiData"
 import { AttractPlace } from "./cards/attraction"
 import ClipLoaders from "./loader/clipLoader"
+import { generateError } from "../../constants/alerts/alerts";
+import { useAppUseSelector } from "../../store/hooks";
 export interface attractionsType {
     text: string
     description: string
@@ -40,7 +42,7 @@ const TripList = () => {
     const [latitude, setLatutude] = useState<number>(0)
     const [attractions, setAttraction] = useState<attractionsType[]>([])
     const [aloading, setAloading] = useState(false)
-
+    const { email } = useAppUseSelector((state) => state.user)
     const navigate = useNavigate()
     useEffect(() => {
         const getTrips = async () => {
@@ -57,8 +59,8 @@ const TripList = () => {
     const handleGetPlaces = async (text: string) => {
         setPlace(text)
         const result = await getLocationSuggestion(text)
-        console.log(result[0],'555');
-        
+        console.log(result[0], '555');
+
         setPlaces(result)
         setIsSearch(true)
     }
@@ -92,13 +94,24 @@ const TripList = () => {
                 setAttraction(response.results)
             } else if (response.attractions) {
                 setAttraction(response.attractions)
+            } else {
+                generateError('Error fetching data  ')
             }
             setAloading(false)
         } catch (error) {
             console.error('Error in API call', error);
         }
     }
-
+    const handleGetMyTrips = () => {
+        console.log('kkk');
+        
+        const myTrips = trips.filter(trip =>
+            trip.members.some(member => member.email === email)
+        );
+        console.log(myTrips.length);
+        
+        setFilteredTrip(myTrips)
+    }
     return (
         <>
             <section className="bg-white ">
@@ -143,8 +156,8 @@ const TripList = () => {
                             Nearby
                         </button>
                         <div className=" flex justify-end">
-                            <button className="px-4 h-full text-white hover:text-black bg-black border hover:border-black hover:bg-white rounded-full "
-                                onClick={handleGemini}>
+                            <button className={` px-4 text-white hover:text-black bg-black border hover:border-black hover:bg-white rounded-full `}
+                                onClick={()=>longitude?handleGemini():handleGetMyTrips()}>
                                 {longitude ? 'Attraction' : 'My Trips'}
                             </button>
                         </div>
@@ -173,14 +186,19 @@ const TripList = () => {
                             </div>}
                     </div>
                     {aloading ? <ClipLoaders loading={aloading} /> :
-                        attractions.length > 0 &&
-                        <div className=" mx-auto py-12 px-4 grid grid-cols-3">
-                            {attractions.map((attraction: attractionsType) => {
-                                return (
-                                    <AttractPlace attractions={attraction} />
-                                )
-                            })}
-                        </div>
+                        attractions.length > 0 ?
+                            <div>
+                                <div className=" mx-auto py-12 px-4 grid grid-cols-3">
+                                    {attractions.map((attraction: attractionsType) => {
+                                        return (
+                                            <AttractPlace attractions={attraction} />
+                                        )
+                                    })}
+                                </div>
+                            </div> :
+                            <div className={`${longitude?'block':'hidden'}`}>
+                                <h2   >No Attractions Found</h2>
+                            </div>
                     }
                 </div>
             </section>

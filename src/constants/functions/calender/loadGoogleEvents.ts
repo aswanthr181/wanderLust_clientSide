@@ -2,7 +2,7 @@ import { gapi } from 'gapi-script';
 
 export const loadGoogleEvents = async (monthStart: Date): Promise<any[]> => {
   const startDate = new Date(monthStart.getFullYear(), monthStart.getMonth(), 1);
-  const endDate = new Date(monthStart.getFullYear(), monthStart.getMonth() + 1, 0, 23, 59, 59, 999); // Last day of the month
+  const endDate = new Date(monthStart.getFullYear(), monthStart.getMonth() + 1, 0, 23, 59, 59, 999)
 
   try {
     console.log('s1');

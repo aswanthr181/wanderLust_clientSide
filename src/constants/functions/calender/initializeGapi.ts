@@ -10,14 +10,13 @@ export const initializeGapi = (CLIENT_ID: string, API_KEY: string, DISCOVERY_DOC
     }).then(() => {
       const authInstance = gapi.auth2.getAuthInstance();
       if (authInstance.isSignedIn.get()) {
-        onSuccess();  // Load events or any other task after successful login
+        onSuccess(); 
       } else {
-        // Optional: handle cases where sign-in might be needed but not automatically
-        console.log('User is not signed in. Consider prompting the user to sign in.');
+        console.log('Not signed in');
       }
     }).catch((error: any) => {
       console.error("Error initializing gapi:", error);
-    });
+    })
   };
 
   gapi.load('client:auth2', start);

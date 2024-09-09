@@ -73,16 +73,10 @@ const Login = ({ setIsGoogleSignedIn, setIsModalOpen }: { setIsGoogleSignedIn: (
                                     </div>
                                     {/* <GoogleLogins setLogin={setLogin} /> */}
                                 </div>
-
-
-
-
                             </form>
                         </div>
                     </div>
                 </div>
-
-
             </div>
 
 

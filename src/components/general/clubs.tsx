@@ -1,5 +1,5 @@
 import axios from "axios"
-import  { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { serverApi } from "../../constants/api"
 import { useNavigate } from "react-router-dom"
 import { useAppUseSelector } from "../../store/hooks"
@@ -7,6 +7,8 @@ import { calculateDistance } from "../../constants/functions/calculateDistance"
 import ModalAction from "./modals/actionModal"
 import ClipLoaders from "./loader/clipLoader"
 import Empty from "./empty"
+import { generateError } from "../../constants/alerts/alerts"
+import { Toaster } from "react-hot-toast"
 
 interface type {
     name: string,
@@ -14,8 +16,8 @@ interface type {
     logo: string,
     id: string,
     isMemberOrAdmin: boolean
-    members:number
-    admin:string
+    members: number
+    admin: string
 }
 
 interface memberType {
@@ -44,13 +46,12 @@ const modalData = {
     text: 'Are you sure want to join ',
     action: 'JOIN'
 }
-const Club = ({ name, place, logo, id, isMemberOrAdmin,members,admin }: type) => {
+const Club = ({ name, place, logo, id, isMemberOrAdmin, members, admin }: type) => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
     const { email } = useAppUseSelector((state) => state.user)
     const navigate = useNavigate()
-    console.log(id, 'comppp');
-
+    console.log(id, 'comppp')
     const handleJoin = async () => {
         setIsModalOpen(true)
     }
@@ -91,7 +92,7 @@ const Club = ({ name, place, logo, id, isMemberOrAdmin,members,admin }: type) =>
                                 <p className="">
                                     Total Members : {members}
                                 </p>
-                                
+
                                 <p className="">Admin : {admin} </p>
                             </div>
 
@@ -159,6 +160,8 @@ const Clubs = () => {
     }
     const FilterBy = () => {
         if (longitude && latitude) {
+            console.log(longitude,latitude,'hiiii');
+            
             const filteredClubs = clubs.filter((club) => {
                 const distance = calculateDistance(
                     latitude,
@@ -171,6 +174,24 @@ const Clubs = () => {
             })
             setClubs(filteredClubs)
         } else {
+            generateError('Please allow access to Location')
+
+            if ("geolocation" in navigator) {
+                // Trigger the location prompt
+                navigator.geolocation.getCurrentPosition(
+                  (position) => {
+                    // Successfully retrieved the user's location
+                    console.log("Latitude: ", position.coords.latitude);
+                    console.log("Longitude: ", position.coords.longitude);
+                  },
+                  (error) => {
+                    // Handle error scenarios
+                    console.error("Error getting location: ", error.message);
+                  }
+                );
+              } else {
+                console.error("Geolocation is not supported by this browser.");
+              }
             console.log('Geolocation is not available');
 
         }
@@ -188,8 +209,8 @@ const Clubs = () => {
     return (
         <>{
             !loading ?
-
                 <div className="mt-10 overflow-hidden ">
+                    <Toaster/>
                     <div className=" ">
                         <div className='flex justify-center  space-x-1'>
                             <input
@@ -215,7 +236,7 @@ const Clubs = () => {
                                 return (
                                     <>
                                         <div key={club._id}>
-                                            <Club admin={club.admin} name={club.clubName} place={club.location.place} logo={club.logo} id={club._id} isMemberOrAdmin={isMemberOrAdmin} members={club.members.length}  />
+                                            <Club admin={club.admin} name={club.clubName} place={club.location.place} logo={club.logo} id={club._id} isMemberOrAdmin={isMemberOrAdmin} members={club.members.length} />
                                         </div>
                                     </>
                                 )

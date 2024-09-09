@@ -4,7 +4,7 @@ interface recordArgumentType {
     mediaStream: React.MutableRefObject<MediaStream | null>;
     mediaRecorder: React.MutableRefObject<MediaRecorder | null>;
     chunks: React.MutableRefObject<Blob[]>;
-    setAudio: (image: string) => void;
+    setAudio: (audio: string) => void;
     setIsRecording:(isRecording:boolean)=>void
 }
 
@@ -12,8 +12,6 @@ interface stopArgumentType {
     mediaStream: React.MutableRefObject<MediaStream | null>;
     mediaRecorder: React.MutableRefObject<MediaRecorder | null>;
     setIsRecording:(isRecording:boolean)=>void
-
-
 }
 
 export const recordAudio = async ({ mediaStream, mediaRecorder, chunks, setAudio,setIsRecording }: recordArgumentType) => {

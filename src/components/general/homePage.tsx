@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import Attraction, { attractionType } from "./cards/attraction";
-import { aboutSite } from "../../constants/text";
+import { aboutSite, appDescription } from "../../constants/text";
 
 const HomePage = () => {
     const [place, setPlace] = useState<string>('')
@@ -71,21 +71,22 @@ const HomePage = () => {
 
 
             <div className="relative rounded-lg py-12 px-40 mr-1 lg:ml-10 lg:mr-10 ml-1  mt-1">
-                <div className="relative z-10 text-center py-12 md:py-24">
-                    <h1 className="text-white hover:text-slate-300 text-center text-2xl md:text-2xl lg:text-2xl xl:text-2xl font-display font-bold mb-6">
+                <div className="relative z-10 text-center w-full py-12 md:py-24 ">
+                    <h1 className="text-white hidden md:block hover:text-slate-300 text-center text-lg md:text-2xl lg:text-2xl xl:text-2xl font-display font-bold mb-6">
                         JOIN IN CLUBS
                     </h1>
-                    <p className="text-white mb-10 text-base md:text-lg font-bold">
+                    <p className="text-white mb-10 text-base md:text-lg font-bold hidden md:block">
                         Dive into a community of like-minded individuals who share your
                         enthusiasm for travelling and active living.
                     </p>
                     <button
 
-                        className="inline-block bg-black text-white uppercase border-2 border-white text-sm tracking-widest font-heading px-8 py-4"
+                        className=" bg-black text-white uppercase border-2  border-white text-sm tracking-widest font-heading  py-4"
                     >
                         {" "}
                         JOIN IN CLUBS
                     </button>
+                    
                 </div>
                 <img
                     src="https://images.pexels.com/photos/21014/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
@@ -103,23 +104,17 @@ const HomePage = () => {
                     </a>
                 </div>
                 <div className="md:order-first bg-gray-100 p-12 md:p-24 flex justify-end items-center lg:ml-9">
-                    <div className="max-w-md">
+                    <div className="max-w-md overflow-hidden">
                         <div className="md:ml-4 md:w-96 h-2 bg-black mb-4"></div>
                         <h2 className="font-display font-bold text-2xl md:text-2xl lg:text-3xl mb-6">
                             JOIN YOUR FAVORITE TRIP
                         </h2>
                         <p className="font-light text-gray-600 text-sm md:text-base mb-6 leading-relaxed">
-                            "Experience convenience like never before with our 'Book Your
-                            Favorite Turf' feature. Whether you're gearing up for an intense
-                            match or simply looking for a place to have fun with friends, our
-                            seamless booking system empowers you to reserve the turf that
-                            suits your needs. Say goodbye to hassles and long waits – with
-                            just a few clicks, you can secure your spot on the field and get
-                            ready to play"
+                           {appDescription}
                         </p>
                         <button className="inline-block border-2 border-black font-light text-black text-sm uppercase tracking-widest py-3 px-8 hover:bg-black hover:text-white">
                             {" "}
-                            VIEW CLUBS
+                            VIEW TRIPS
                         </button>
                     </div>
                 </div>

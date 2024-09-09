@@ -9,6 +9,4 @@ export const gSCOPES = 'https://www.googleapis.com/auth/calendar.events'
 export const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'];
 
 export const geminiApi="AIzaSyBU2M4FONdlHt-wYkw8nmP265o8aOC8PGc"
-
-
 export const serverApi='http://localhost:3000'

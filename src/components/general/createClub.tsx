@@ -44,7 +44,9 @@ const CreateClub = () => {
         }
         try {
             setIsImageGenerating(true)
-            await getAiGeneratedImage(imgtext, setImage)
+           const result= await getAiGeneratedImage(imgtext, setImage)
+           console.log(result,'65656');
+           
         } catch (error) {
             console.error(error,'ererere');
             generateError(String(error))
